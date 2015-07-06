@@ -1,0 +1,385 @@
+body {
+  background:#000000;
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 95vh;
+  color: #CCCCCC;
+  	
+}
+.hidden {
+  display: none;	
+}
+.inline {
+	float:left;
+}
+li {
+  list-style : none;
+  cursor: pointer;
+}
+#dial-pad-wrapper {
+  font-size: 2em;
+  color: #fff;
+  background: #000;
+  overflow:hidden;
+  padding : 0px;
+  padding-top: 0px;
+}
+#dial-pad-wrapper ol {
+  padding-left:0px;
+  margin:0px; 
+}
+.clearfix {
+  clear:both; 
+}
+#dial-pad-wrapper #log {
+	float: left;
+}
+#dial-pad-wrapper #user {
+	float: right;
+}
+.number {
+  display: block;
+}
+#dial-pad-wrapper .header li, 
+#dial-pad-wrapper .dials li {
+  float: left;
+  
+  text-align: center;
+}
+
+#dial-pad-wrapper li.contact {
+ 
+  list-style: none;
+  cursor: pointer;
+ 
+}
+
+#dial-pad-wrapper .header li {
+  width: 25%;
+  height:15vw;
+  border-bottom-style:solid;
+  border-left-width: 0px;
+  border-bottom-width: 3px;
+  border-bottom-color: #000000;
+}
+#dial-pad-wrapper .header li.selected {
+ border-bottom-color: rgb(170,213,240);	
+}
+#dial-pad-wrapper .dials li {
+  width: 32%;
+  height: 12vh;
+  margin-top: 2%;
+}
+
+#dial-pad-wrapper .dials li.second,
+#dial-pad-wrapper .dials li.third{
+  margin-left: 2%;
+}
+#dial-pad-wrapper li p{
+  display: none;
+}
+
+#dial-pad-wrapper .number {
+ width: 100%;
+ 
+ height: 10vh;
+ font-size: 1.0em;
+ padding: 15px;
+ color: #fff; 
+ 
+}
+
+
+#dial-pad-wrapper .icon {
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+
+#phonestate-indicator, #phonevolume-indicator {
+  background-size:100% 100%;
+  margin-left: 5vw;
+  float:left;
+  height:4vw;
+  background-repeat:no-repeat;
+}
+
+#phonestate-indicator {width: 10vw;}
+#phonevolume-indicator {width:8vw}
+
+
+#dial-pad-wrapper .icon.refresh {background-image: url('icons/refresh.png')}
+#dial-pad-wrapper .icon.remove  {background-image: url('icons/remove.png')}
+#dial-pad-wrapper .icon.call {background-image: url('icons/call.png')}
+#dial-pad-wrapper .icon.hangup {background-image: url('icons/hangup.png')}
+#dial-pad-wrapper .icon.zero {background-image: url('icons/zero.png')}
+#dial-pad-wrapper .icon.one {background-image: url('icons/one.png')}
+#dial-pad-wrapper .icon.two {background-image: url('icons/two.png')}
+#dial-pad-wrapper .icon.three {background-image: url('icons/three.png')}
+#dial-pad-wrapper .icon.four {background-image: url('icons/four.png')}
+#dial-pad-wrapper .icon.five {background-image: url('icons/five.png')}
+#dial-pad-wrapper .icon.six {background-image: url('icons/six.png')}
+#dial-pad-wrapper .icon.seven {background-image: url('icons/seven.png')}
+#dial-pad-wrapper .icon.eight {background-image: url('icons/eight.png')}
+#dial-pad-wrapper .icon.nine {background-image: url('icons/nine.png')}
+#dial-pad-wrapper .icon.asterix {background-image: url('icons/asterix.png')}
+#dial-pad-wrapper .icon.pound {background-image: url('icons/pound.png')}
+#dial-pad-wrapper .icon.keypad {background-image: url('icons/keypad.png')}
+#dial-pad-wrapper .icon.ringer{background-image: url('icons/ringer.png')}
+#dial-pad-wrapper .icon.community {background-image: url('icons/community.png')}
+#dial-pad-wrapper .icon.contacts {background-image: url('icons/contacts.png')}
+#dial-pad-wrapper .icon.avatar {background-image: url('icons/avatar.png')}
+#dial-pad-wrapper .icon.calls {background-image: url('icons/calls.png')}
+#dial-pad-wrapper .icon.credit {background-image: url('icons/credit.png')}
+#dial-pad-wrapper .icon.connect {background-image: url('icons/connect.png')}
+#dial-pad-wrapper .icon.calling {background-image: url('icons/calling.png')}
+#dial-pad-wrapper .icon.onhook {background-image: url('icons/onhook.png')}
+#dial-pad-wrapper .icon.saveuser {background-image: url('icons/saveuser.png')}
+#dial-pad-wrapper .icon.help {background-image: url('icons/help.png')}
+#dial-pad-wrapper .icon.updatewallet {background-image: url('icons/updatewallet.png')}
+
+#phonestate-indicator.ready {background-image: url('icons/indicator_ready.png')}
+#phonestate-indicator.disconnected {background-image: url('icons/indicator_disconnected.png')}
+#phonestate-indicator.dialing {background-image: url('icons/indicator_dialing.png')}
+#phonestate-indicator.connected {background-image: url('icons/indicator_connected.png')}
+#phonestate-indicator.pending {background-image: url('icons/indicator_pending.png')}
+#phonestate-indicator.no-state{background-image: url('icons/indicator_nostate.png')}
+
+#phonevolume-indicator.volume_0 {background-image: url('icons/volume_0.png')}
+#phonevolume-indicator.volume_1 {background-image: url('icons/volume_1.png')}
+#phonevolume-indicator.volume_2 {background-image: url('icons/volume_2.png')}
+
+
+/******* page 1 and sub pages *********/
+.page.sub {
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top:5%;
+	font-size: 0.6em;
+}
+.page.sub .inline {
+	margin-right: 5px;
+}
+
+#dial-pad-wrapper .header #calllist {
+	max-height: 62vh;
+	overflow-y:scroll;
+}
+#calls-list .icon.ringer {
+  background-size: 100% 100% !important;
+  margin-right:10px;
+  float:left;
+  width: 30px;
+  height:30px;
+	
+}
+#dial-pad-wrapper .header #calls-list li.call {
+	width: 100%;
+	height: 5vh;
+	padding-top:1vh;
+	padding-bottom:1vh;
+	border-top-style: solid;
+	border-top-width:1px;
+	border-top-color :808080;
+}
+#calls-list .details span {
+	margin-right: 0vw;
+	text-align:left;
+}
+#calls-list .details span.call-number {
+    width:50vw;
+}
+#calls-list .details span.call-date {
+    width:20vw;
+    font-size: 0.7em;
+}
+#calls-list .details span.call-time {
+    width:20vw;
+    font-size: 0.7em;
+}
+   
+
+/******* contacts list ***************/
+#page_2,#page_3 {
+  font-family: Arial, "MS Trebuchet", sans-serif;
+  font-size: 0.5em;
+}
+#page_4, #page_2 ol,#page_3 ol{	
+}
+
+#page_3 .index, #page_2 .index{
+  width:8%;
+  float:right;
+  
+}
+#page_3 .index li, #page_2 .index li{
+  width:100%;
+  text-align:right;
+}
+
+li.contact {
+  width:95%;
+  margin-top:1%;
+  border-top-style:solid;
+  border-top-width: 1px;
+  border-top-color:#CCCCCC;
+}
+
+li.contact .icon.avatar {
+  height:40px;
+  width:40px;
+  float: left;
+  margin-right: 2%;
+}
+li.contact .contact-name {
+ vertical-align: middle;
+}
+#page_3 .list, #page_2 .list{
+  width:92%;
+  float:left;
+  height: 80vh;
+  overflow-y: scroll;
+}
+
+
+/******************** calling page ***************/
+#page_4 {
+  padding-top:50px;
+}
+#page_4 div {
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.icon.calling {
+  background-size: 100% 100% !important;
+  height: 100px;
+  margin-bottom:50px;
+}
+.icon.onhook {
+  background-size: 100% 100% !important;
+  height:20vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+/****************** page 5 and 6  save user/ refresh wallet **********************************/
+#page_5 , #page_6  {
+  font-size:0.6em;
+  padding-left: 2%;
+  padding-right:2%;
+  padding-top:2%;
+  color: rgb(175,190,200);
+}
+#page_5 input, #page_6 input {
+  float: left;
+  display: inline;
+  height:35px;
+  color: rgb(175,190,200);
+  font-size:1em;
+  background: rgb(75,100,120);
+  border-radius:5px;
+  border-color: #BBBBBB;
+}
+#page_5 input{
+	height:35px;
+  
+}
+#page_6 input {
+height:30px;
+  
+}
+
+
+#page_5 div.group {
+  margin-top:3%;	 
+}
+#page_6 div.group {
+  margin-top:1%;	 
+}
+div.line input.wide {
+	width:80%;
+}
+div.line input.narrow {
+	width:15%;
+}
+div.line input.ultra-narrow {
+	width:8%;
+}
+
+#page_5 .icon.help {
+  background-size: 100% 100% !important;
+  margin-left:10px;
+  float:left;
+  width: 35px;
+  height:35px;
+ 
+}
+#page_6 .icon.help {
+  background-size: 100% 100% !important;
+  margin-left:10px;
+  float:left;
+  width: 30px;
+  height:30px;
+ 
+}
+.icon.saveuser {
+  background-size: 100% 100% !important;
+  
+  margin-top:5vh;
+  width: 25%;
+  height:15vw;
+  border-radius:5px;
+
+}
+.icon.updatewallet {
+background-size: 100% 100% !important;
+  
+  margin-top:5vh;
+  width: 25%;
+  height:10vw;
+  border-radius:5px;
+	
+}
+#dialog {
+	position: absolute;
+	z-index: 1;
+	font-size: 0.6em;
+	width:80vw;
+	left: 10vw;
+	top: 10vh;
+	background : #3f5e77;
+	border-style:solid;
+	border-width:1px;
+	border-color:#dedede;
+	border-radius:5px;
+}
+#dialog .header {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	
+	text-align: center;
+	background: rgba(0,0,0,0.5);
+}
+#dialog .content {
+	font-size: 0.8em;
+	padding:3%;
+	/*color:#000000;*/
+}
+#dialog  .button{
+	text-align: center;
+	width:15vw;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 3%;
+	margin-bottom:3%;
+	border-style:solid;
+	border-width:1px;
+	border-color:#000000;
+	background: rgba(0,0,0,0.5);
+	/*color: #FFFFFF;*/
+	border-radius:5px;
+	
+}
+

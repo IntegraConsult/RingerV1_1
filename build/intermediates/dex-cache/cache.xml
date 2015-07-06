@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/admin/AndroidStudioProjects/RingerV1_1/app/libs/twilioclient-android.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="eb4711f9c905916abc7747456d9e342ee23ffa5e">
+        <dex dex="/Users/admin/AndroidStudioProjects/RingerV1_1/app/build/intermediates/pre-dexed/debug/twilioclient-android-8d711171a1185d18da38d99952e4f40eece1dfd0.jar" />
+    </item>
+
+</items>

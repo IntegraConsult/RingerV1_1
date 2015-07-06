@@ -1,0 +1,224 @@
+.hidden {
+  display: none;	
+}
+li {
+  list-style : none;
+  cursor: pointer;
+}
+#dial-pad-wrapper {
+	
+  font-size: 1em;
+  color: #fff;
+  background-image: url('phone1.jpg');
+  overflow:hidden;
+  width: 980px;
+  height: 700px;
+  padding-left: 20px ;
+  padding-top: 0px;
+  padding-right: 20px;
+}
+.dials {
+   background-image: url("icons/dial.png");
+    height: 260px;
+    margin-left: auto;
+    margin-right: 360px;
+    margin-top: 15px;
+    width: 267px;
+  	
+}
+#dial-pad-wrapper ol {
+  padding-left:0px;
+  margin:0px; 
+}
+.clearfix {
+  clear:both; 
+}
+#dial-pad-wrapper #log {
+	float: left;
+}
+#dial-pad-wrapper #user {
+	float: right;
+}
+.number {
+  display: block;
+}
+#dial-pad-wrapper .header li, 
+#dial-pad-wrapper .dials li {
+  float: left;
+  
+  text-align: center;
+}
+
+#dial-pad-wrapper li.contact {
+ 
+  list-style: none;
+  cursor: pointer;
+ 
+}
+
+#dial-pad-wrapper .header li {
+  width: 25%;
+  height:37px;
+  border-bottom-style:solid;
+  border-left-width: 0px;
+  border-bottom-width: 10px;
+  border-bottom-color: #000000;
+}
+#dial-pad-wrapper .header li.selected {
+ border-bottom-color: rgb(170,213,240);	
+}
+#dial-pad-wrapper .dials li {
+  width: 44px;
+  height: 44px;
+}
+
+#dial-pad-wrapper .dials li.one {
+    margin-left: 217px;
+    margin-top: 106px;
+}
+
+#dial-pad-wrapper .dials li.two {
+    margin-left: 203px;
+    margin-top: -95px;
+}
+
+#dial-pad-wrapper .dials li.three {
+    margin-left: 162px;
+    margin-top: -130px;
+}
+#dial-pad-wrapper .dials li.four {
+    margin-left: 111px;
+    margin-top: -142px;
+}
+#dial-pad-wrapper .dials li.five{
+    margin-left: 59px;
+    margin-top: -129px;
+}
+#dial-pad-wrapper .dials li.six {
+    margin-left: 22px;
+    margin-top: -92px;
+}
+#dial-pad-wrapper .dials li.seven {
+   margin-left: 9px;
+    margin-top: -42px;
+}
+
+#dial-pad-wrapper .dials li.eight {
+    margin-left: -30px;
+    margin-top: 7px;
+}
+
+#dial-pad-wrapper .dials li.nine {
+    margin-left: -6px;
+    margin-top: 43px;
+}
+
+#dial-pad-wrapper .dials li.asterix {
+    margin-left: -33px;
+    margin-top: -80px;
+}
+
+#dial-pad-wrapper .dials li.zero {
+    margin-left: 9px;
+    margin-top: 56px;
+}
+#dial-pad-wrapper .dials li.pound {
+    margin-left: -7px;
+    margin-top: -80px;
+}
+#dial-pad-wrapper .dials li.refresh {
+    margin-left: -84px;
+    margin-top: -9px;
+}
+#dial-pad-wrapper .dials li.remove {
+    margin-left: -11px;
+    margin-top: -10px;
+}
+#dial-pad-wrapper .dials li.call {
+    margin-left: -79px;
+    margin-top: -46px;
+}
+#dial-pad-wrapper li p{
+  display: none;
+}
+
+#dial-pad-wrapper .number {
+color: #fff;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 1.5em;
+    height: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 146px;
+    padding: 15px;
+    width: 201px;
+}
+
+
+#dial-pad-wrapper .icon {
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+#dial-pad-wrapper .icon.refresh {background-image: url('icons/refresh.png')}
+#dial-pad-wrapper .icon.remove  {background-image: url('icons/remove.png')}
+#dial-pad-wrapper .icon.call {background-image: url('icons/call.png')}
+#dial-pad-wrapper .icon.hangup {background-image: url('icons/hangup.png')}
+#dial-pad-wrapper .icon.asterix {background-image: url('icons/asterix.png')}
+#dial-pad-wrapper .icon.pound {background-image: url('icons/pound.png')}
+#dial-pad-wrapper .icon.keypad {background-image: url('icons/keypad.png')}
+#dial-pad-wrapper .icon.logs {background-image: url('icons/logs.png')}
+#dial-pad-wrapper .icon.favourites {background-image: url('icons/favourites.png')}
+#dial-pad-wrapper .icon.contacts {background-image: url('icons/contacts.png')}
+#dial-pad-wrapper .icon.avatar {background-image: url('icons/avatar.png')}
+#dial-pad-wrapper .icon.calls {background-image: url('icons/calls.png')}
+#dial-pad-wrapper .icon.credit {background-image: url('icons/credit.png')}
+#dial-pad-wrapper .icon.connect {background-image: url('icons/connect.png')}
+
+/******* contacts list ***************/
+#page_2,#page_3 {
+  font-family: Arial, "MS Trebuchet", sans-serif;
+  font-size: 1em;	
+}
+#page_4, #page_2 ol,#page_3 ol{
+  min-height: 1600px;	
+}
+#page_3 .list, #page_2 .list{
+  width:90%;
+  float:left;
+  max-height: 1573px;
+  overflow-y: scroll;
+}
+#page_3 .index, #page_2 .index{
+  width:10%;
+  float:right;
+  
+}
+#page_3 .index li, #page_2 .index li{
+  width:100%;
+  text-align:right;
+}
+
+li.contact {
+  margin-top:1%;	
+  border-top-style:solid;
+  border-top-width: 1px;
+  border-top-color:#CCCCCC;
+}
+
+li.contact .icon.avatar {
+  height:120px;
+  width:120px;
+  float: left;
+  margin-right: 2%;
+}
+li.contact .contact-name {
+ vertical-align: middle;
+}
+
+
+
+/******************** calling page ***************/
+.icon.hangup {
+  width:300px;
+  height:200px;
+}

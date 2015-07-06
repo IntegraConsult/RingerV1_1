@@ -1,0 +1,62 @@
+<html>
+<head>
+    <title>samsun skin</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <script type="text/javascript" src="settings.js"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+
+</head>
+<body>
+<div id="dial-pad-wrapper">
+    <section role="main">
+        <div class="dial-pad compact">
+
+            <div id="page_5" class="page set-user-page">
+                <div class="group">
+                    <div class="label">Your name</div>
+                    <div class="line">
+                      <input type="text" name="name" id="name" class="text wide" onchange="nameCheck(); "/>
+                      <div class="icon help" onclick="dialogOpen(nameHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="label">4 digit pin code</div>
+                    <div class="line">
+                    
+                      <input type="password" name="code" id="code" class="text narrow" onchange="pinCheck();" />
+                      <div class="icon help" onclick="dialogOpen(pinHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+
+
+                <div class="group">
+                    <div class="label">Your phone number</div>
+                    <div class="line">
+                    
+                      <input type="text" name="phone" id="phone" class="text wide" onchange="phoneCheck();" />
+                      <div class="icon help" onclick="dialogOpen(phoneHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div onclick="save_user()" class="icon saveuser"></div>
+
+            </div>
+            <!--/#page_5 -->
+        </div>
+        <div id="dialog" class=dialog>
+        	<div class="header">Help</div>
+        	<div class="content">.......</div>
+        	<div class="button" onclick ="dialogClose()">OK</div>
+        </div>
+        <!--/.dialpad compact -->
+    </section>
+</div>
+
+
+</body>
+</html>

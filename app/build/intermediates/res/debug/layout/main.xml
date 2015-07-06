@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Initialising Ringer..."
+            android:id="@+id/textView"
+            android:autoText="true"
+
+            android:background="#000000"
+            android:textColor="#CCCCCC"
+            android:layout_weight="0.75" />
+
+        <TextView
+            android:layout_width="121dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="not logged in"
+            android:id="@+id/userText"
+            android:autoText="true"
+
+            android:background="#000000"
+            android:textColor="#CCCCCC"
+            android:gravity="right"
+            android:layout_weight="0.22" />
+
+
+    </LinearLayout>
+
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="464dp"
+        android:id="@+id/webView"
+        android:layout_weight="0.31"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout"
+        android:layout_above="@+id/speaker_toggle" />
+
+    <ImageButton
+        android:id="@+id/main_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#000"
+        android:padding="0dp"
+        android:gravity="center"
+        android:src="@drawable/idle"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="false"
+        android:layout_alignParentBottom="true" />
+
+    <ToggleButton
+        android:id="@+id/speaker_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="@string/speaker"
+        android:textOn="@string/speaker"
+        android:layout_alignBottom="@+id/log_text_box"
+        android:layout_toLeftOf="@+id/mute_toggle" />
+
+    <ToggleButton
+        android:id="@+id/mute_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="@string/mute"
+        android:textOn="@string/mute"
+        android:layout_below="@+id/webView"
+        android:layout_alignParentRight="true" />
+
+
+    <EditText
+        android:id="@+id/log_text_box"
+        android:layout_width="wrap_content"
+        android:editable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="textMultiLine"
+        android:gravity="top"
+        android:layout_alignBottom="@+id/main_button"
+        android:layout_toRightOf="@+id/main_button"
+        android:layout_toLeftOf="@+id/speaker_toggle"
+        android:textColor="#7daad5ed"
+        android:background="#FF000000"
+        android:singleLine="true"
+        android:layout_height="55dp"/>
+
+
+</RelativeLayout><!-- From: file:/Users/admin/AndroidStudioProjects/RingerV1_1/app/src/main/res/layout/main.xml -->

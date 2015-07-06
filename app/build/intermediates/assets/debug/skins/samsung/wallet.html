@@ -1,0 +1,84 @@
+<html>
+<head>
+    <title>samsun skin</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <script type="text/javascript" src="settings.js"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+
+</head>
+<body>
+<div id="dial-pad-wrapper">
+    <section role="main">
+        <div class="dial-pad compact">
+            
+            <div id="page_6" class="set-wallet-page">
+            Refresh your wallet
+                <div class="group">
+                    <div class="label">Amount in Euros</div>
+                    <div class="line">
+                      <input type="text" name="amount" id="amount" class="text wide" onchange="amountCheck(); "/>
+                      <div class="icon help" onclick="dialogOpen(amountHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+                
+                <div class="group">
+                    <div class="label">credit card</div>
+                    <div class="line">
+                      <input type="text" name="ccNumber" id="ccNumber" class="text wide" onchange="creditCardCheck(); "/>
+                      <div class="icon help" onclick="dialogOpen(creditcardHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="label">expires on </div>
+                    <div class="line">
+                    
+                      <input type="text" name="expirationMonth" id="expirationMonth" class="text ultra-narrow" onchange="expirationMonthCheck();" />
+                      <input type="text" name="expirationYear" id="expirationYear" class="text narrow" onchange="expirationYaerCheck();" />
+                      
+                      <div class="icon help" onclick="dialogOpen(expirationHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+
+
+                <div class="group">
+                    <div class="label">Security code</div>
+                    <div class="line">
+                    
+                      <input type="text" name="securityCode" id="securityCode" class="text narrow" onchange="securityCodeCheck();" />
+                      <div class="icon help" onclick="dialogOpen(securityCodeHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+                
+                <div class="group">
+                    <div class="label">Name on card</div>
+                    <div class="line">
+                    
+                      <input type="text" name="nameOnCard" id="nameOnCard" class="text wide" onchange="nameCheck();" />
+                      <div class="icon help" onclick="dialogOpen(nameOnCardHelp)"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div onclick="update_wallet()" class="icon updatewallet"></div>
+
+            </div>
+            <!--/#page_5 -->
+        </div>
+        <div id="dialog" class=dialog>
+        	<div class="header">Help</div>
+        	<div class="content">.......</div>
+        	<div class="button" onclick ="dialogClose()">OK</div>
+        </div>
+        <!--/.dialpad compact -->
+    </section>
+</div>
+
+
+</body>
+</html>
