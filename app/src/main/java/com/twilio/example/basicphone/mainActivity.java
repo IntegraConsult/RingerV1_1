@@ -75,7 +75,7 @@ public class mainActivity extends Activity implements LoginListener,
     private TextView statusBar;
     private TextView userBar;
 
-    private user phoneUser;
+    public user phoneUser;
     private device mDevice;
 
     public void statusAlert(String message){
@@ -372,7 +372,7 @@ public class mainActivity extends Activity implements LoginListener,
         //inputSelect.setOnCheckedChangeListener(this);
         phone = provider.getInstance(getApplicationContext());
         phone.setListeners(this, this, this);
-
+        phone.setParent(mainActivity.this);
         /*
         phone.login(clientNameTextBox.getText().toString(), 
         			outgoingCheckBox.isChecked(), 
@@ -630,6 +630,7 @@ public class mainActivity extends Activity implements LoginListener,
         hideIncomingAlert();
         addStatusMessage(R.string.incoming_disconnected);
         syncMainButton();
+        mDevice.stopRingRing();
     }
 
     @Override

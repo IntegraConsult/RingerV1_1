@@ -75,6 +75,7 @@ public class device {
         if (resourceId != 0) {
             ringRing = MediaPlayer.create(mainContext.getApplicationContext(), resourceId);
             ringRing.setVolume(leftRingRingVolume, rightRingRingVolume);
+            ringRing.setLooping(true);
             Log.d(TAG, "startRingRing");
             ringRing.start();
 

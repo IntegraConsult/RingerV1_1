@@ -136,7 +136,7 @@ function list_contacts(json) {
 }
 
 function setWallet (wallet) {
-	console.log("setting wallet to " + wallet);
+	//console.log("setting wallet to " + wallet);
 	jQuery('#wallet').html(wallet);
 }
 

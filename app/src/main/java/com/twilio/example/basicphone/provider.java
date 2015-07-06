@@ -24,6 +24,9 @@ import com.twilio.client.DeviceListener;
 import com.twilio.client.PresenceEvent;
 import com.twilio.client.Twilio;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class provider implements DeviceListener,
                                    ConnectionListener
 {
@@ -66,6 +69,7 @@ public class provider implements DeviceListener,
     }
 
     private final Context context;
+    private mainActivity mainAct;
     private LoginListener loginListener;
     private BasicConnectionListener basicConnectionListener;
     private BasicDeviceListener basicDeviceListener;
@@ -83,9 +87,14 @@ public class provider implements DeviceListener,
     private boolean lastAllowOutgoing;
     private boolean lastAllowIncoming;
 
-    private provider(Context context)
+    public provider(Context context)
     {
+
         this.context = context;
+
+    }
+    public void setParent (mainActivity act) {
+        this.mainAct = act;
     }
 
     public void setListeners(LoginListener loginListener,
@@ -103,13 +112,37 @@ public class provider implements DeviceListener,
     {
     	StringBuilder url = new StringBuilder();
     	url.append(AUTH_PHP_SCRIPT);
-    	url.append("?allowOutgoing=").append(allowOutgoing);
-    	if (allowIncoming && (clientName != null)) {
-    		url.append("&&client=").append(clientName);
-    	}
-    	
+        url.append("?allowOutgoing=").append(allowOutgoing);
+        if (allowIncoming && (clientName != null)) {
+            url.append("&&client=").append(clientName);
+        }
         // This runs asynchronously!
-    	new GetAuthTokenAsyncTask().execute(url.toString());
+        new GetAuthTokenAsyncTask().execute(url.toString());
+
+
+        String code = mainAct.phoneUser.settings.code;
+        String phone = mainAct.phoneUser.settings.phone;
+        JSONObject request = new JSONObject();
+        try {
+            request.put("code",code);
+            request.put("phone",phone);
+        }
+        catch (JSONException e) {
+            Log.e(TAG,"obtainCapabilityToken: JSON encryption error");
+        }
+        String encryptedRequest = this.mainAct.phoneUser.encrypt(request.toString()) ;
+
+
+        String mUrl = AUTH_PHP_SCRIPT + "?q=" +  encryptedRequest;
+
+        // This runs asynchronously!
+        //new GetAuthTokenAsyncTask().execute(mUrl);
+
+
+
+
+
+
     }
 
     private boolean isCapabilityTokenValid()
