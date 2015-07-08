@@ -133,6 +133,13 @@ public class mainActivity extends Activity implements LoginListener,
         //Log.d(TAG,"URL="+url);
         mWebView.loadUrl(url);
     }
+    public void setWallet (Double credit){
+        Log.d(TAG, "setWallet" + credit);
+        String url = "javascript: setWallet(" + credit + ");";
+        Log.d(TAG,"URL="+url);
+        mWebView.loadUrl(url);
+    }
+
 
     private void uiShowState(String state) {
         mWebView.loadUrl("javascript: show_state('" + state + "');");
@@ -163,7 +170,7 @@ public class mainActivity extends Activity implements LoginListener,
             javaScriptUrl ="javascript: ";
             //javaScriptUrl += "list_contacts('" + phoneUser.contacts + "');";
             //javaScriptUrl += " setWallet(" + phoneUser.capabilities.wallet + ");";
-            javaScriptUrl  +=" updateUI(" + phoneUser.capabilities.wallet + ",'" +phoneUser.contacts +"');";
+            javaScriptUrl  +=" updateUI (" + phoneUser.capabilities.wallet + ",'" +phoneUser.contacts +"');";
             //Log.d(TAG,"javascript Url =" + javaScriptUrl);
 
             //phoneLine.phoneEvent("debug","got to onpagefinished event with list =" + javaScriptUrl);
@@ -246,6 +253,7 @@ public class mainActivity extends Activity implements LoginListener,
                 String name = mUser.getString("name");
                 String code = mUser.getString("code");
                 String phone = mUser.getString("phone");
+                phone =phone.replace("plusSign","+");
 
                 Log.d(TAG, "save user " + name);
 
@@ -289,6 +297,12 @@ public class mainActivity extends Activity implements LoginListener,
             } else if (action.equals("getCalls")) {
                 phoneUser.getCalls ();
 
+            } else if (action.equals("getCredits")) {
+                phoneUser.getCredits ();
+
+            } else if (action.equals("gotoPaymentPage")){
+                Log.d(TAG,"gtoPaymentPage");
+                showWallet();
             }
 
         } catch (JSONException e) {
@@ -317,12 +331,6 @@ public class mainActivity extends Activity implements LoginListener,
 
         }
     }
-
-
-
-
-    //// imported stuff ends here /////////////////////////////
-
 
 
 
@@ -410,6 +418,7 @@ public class mainActivity extends Activity implements LoginListener,
     public void onDestroy()
     {
         super.onDestroy();
+        Log.d(TAG,"Destroying application");
 
         if (phone != null) {
             phone.setListeners(null, null, null);
@@ -689,6 +698,7 @@ public class mainActivity extends Activity implements LoginListener,
     @Override
     public void onDeviceStoppedListening(Exception error)
     {
+        Log.d(TAG,"Device stopped listening");
         if (error != null)
             addStatusMessage(String.format(getString(R.string.device_listening_error_fmt), error.getLocalizedMessage()));
         else

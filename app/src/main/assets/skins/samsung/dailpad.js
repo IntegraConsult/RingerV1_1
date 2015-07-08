@@ -41,7 +41,7 @@ function save_user (){
     name: jQuery('#page_5 #name').val(),
     code: jQuery('#page_5 #code').val(),
     phone: jQuery('#page_5 #phone').val(),
-    
+
   };
   EM_proxy('saveUser',user);
 }
@@ -140,6 +140,10 @@ function setWallet (wallet) {
 	jQuery('#wallet').html(wallet);
 }
 
+function goto_payment_page () {
+  EM_proxy('gotoPaymentPage',null);
+}
+
 function list_calls (json) {
   var c = JSON.parse(json);
   var calls = c.parameters;
@@ -153,9 +157,17 @@ function list_calls (json) {
     lijst  +=       '<div class="icon ringer">';
     lijst  +=       '</div>';
     lijst  +=       '<div class="details">';
+    if (calls[i].direction =='in')
+      lijst  +=         '<span class="call-inout inline">'+ calls[i].minutes+'m. from: </span>';
+    else
+      lijst  +=         '<span class="call-inout inline">'+ calls[i].minutes+'m. to: </span>';
+
     lijst  +=         '<span class="call-number inline">' + calls[i].number+'</span>';
-    lijst  +=         '<span class="call-date inline">' + calls[i].loginDate +'</span>';
-    lijst  +=         '<span class="call-time inline">' + calls[i].time +'</span>';
+    lijst  +=         '<span class="call-price inline"> ' + calls[i].price +'</span>';
+    lijst  +=         '<span class="call-startTime inline"> ' + calls[i].startTime +'</span>';
+
+    //lijst  +=         '<span class="call-priceUnit inline"> ' + calls[i].priceUnit +'</span>';
+
     lijst  +=       '</div>';
     lijst  +=       '<div class="clearfix"></div>';
     lijst  +=      '</li>';
@@ -285,7 +297,10 @@ jQuery('document').ready(function (){
 	      // this is the calls log page
 	      EM_proxy("getCalls",null);
 	    }
-	    
+	    if ((page_index==1)&&(sub_page_index==1)) {
+        	      // this is the calls log page
+        	      EM_proxy("getCredits",null);
+        	    }
 	  });
   
   // dialpad event handlers 

@@ -183,20 +183,23 @@ li {
 	border-top-color :808080;
 }
 #calls-list .details span {
-	margin-right: 0vw;
+	margin-right: 1vw;
 	text-align:left;
 }
 #calls-list .details span.call-number {
     width:50vw;
+    font-size: 1.0em;
 }
-#calls-list .details span.call-date {
-    width:20vw;
+#calls-list .details span.call-inout,
+#calls-list .details span.call-price {
+
     font-size: 0.7em;
 }
-#calls-list .details span.call-time {
-    width:20vw;
-    font-size: 0.7em;
+#calls-list .details span.call-startTime{
+  font-size:0.5em;
 }
+
+
    
 
 /******* contacts list ***************/

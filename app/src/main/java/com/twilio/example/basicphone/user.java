@@ -8,7 +8,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,7 +79,7 @@ public class user {
 
 
     public String contacts = "";//json strimng containing contacts list
-    public  String calls = "";//json string containing calls list
+
     public String prefix = "+39";
 
     private ContentResolver phoneContacts;
@@ -95,13 +95,15 @@ public class user {
     final static int RESPONSE_REGISTER = 21;
     final static int RESPONSE_REGISTRATION_OK = 22 ;
 
-    final static int ACTION_UPDATE_WALLET = 30;
-    final static int RESPONSE_UPDATE_WALLET_OK = 31 ;
-    final static int RESPONSE_UPDATE_WALLET_ERROR = 32 ;
+    final static int ACTION_DO_PAYMENT = 30;
+    final static int RESPONSE_DO_PAYMENT_OK = 31 ;
+    final static int RESPONSE_DO_PAYMENT_ERROR = 32 ;
 
-    final static int ACTION_PHONELOG_ERROR = 40 ;
-    final static int ACTION_UPDATE_PHONELOG = 41;
-    final static int RESPONSE_SET_WALLET = 42;
+    final static int ACTION_GET_CREDIT = 40;
+    final static int RESPONSE_GET_CREDIT_OK = 41 ;
+    final static int RESPONSE_GET_CREDIT_ERROR = 42 ;
+
+
 
     final static int ACTION_GET_CALLS = 50;
     final static int RESPONSE_GET_CALLS = 51;
@@ -141,8 +143,8 @@ public class user {
             }
             decryptedResponse += c;
         }
-        Log.d(TAG,"encrypt response "+ webResponse);
-        Log.d(TAG,"decrypted response "+ decryptedResponse);
+        Log.d(TAG, "encrypt response " + webResponse);
+        //Log.d(TAG,"decrypted response "+ decryptedResponse);
         Log.d(TAG, "handling web response" + decryptedResponse);
 
 
@@ -204,26 +206,10 @@ public class user {
 
                     }
                     break;
-                case RESPONSE_SET_WALLET:
-                    try {
-                        parameters = response.getJSONObject("parameters");
-                        this.capabilities.wallet= parameters.getDouble("content");
 
-                    }
-                    catch (JSONException e) {
-                        Log.e(TAG,"ACTION SET WALLET: JSON error");
-                    }
-                    this.userActions.clear();
-                    saveLog();
-                    mainAct.showUI();
-                    break;
                 case RESPONSE_ERROR :
                     String message = response.getString("parameters");
                     Log.e(TAG, message);
-                    break;
-                case ACTION_PHONELOG_ERROR :
-                    message = response.getString("parameters");
-                    Log.e(TAG, "phone log error " + message);
                     break;
 
                 case RESPONSE_REGISTER:
@@ -235,8 +221,8 @@ public class user {
                     mainAct.showUI();
                     loginAtRinger();
                     break;
-                case RESPONSE_UPDATE_WALLET_OK :
-                    //Log.d(TAG, "ACTION_UPDATE_WALLET_OK");
+                case RESPONSE_DO_PAYMENT_OK :
+                    //Log.d(TAG, "ACTION_DO_PAYMENT_OK");
                     try {
                         JSONObject params = response.getJSONObject("parameters");
                         this.capabilities.wallet = params.getDouble("content");
@@ -245,19 +231,27 @@ public class user {
 
                     }
                     catch(JSONException e){
-                        Log.e(TAG,"ACTION_UPDATE_WALLET_OK Error: json error");
+                        Log.e(TAG,"ACTION_DO_PAYMENT_OK Error: json error");
                     }
 
 
                     break;
 
-                case RESPONSE_UPDATE_WALLET_ERROR :
-                    Log.e(TAG, "ACTION_UPDATE_WALLET_ERROR");
+                case RESPONSE_DO_PAYMENT_ERROR :
+                    Log.e(TAG, "ACTION_DO_PAYMENT_ERROR");
                     mainAct.statusAlert("transaction failed");
 
                     break;
                 case RESPONSE_GET_CALLS :
                     mainAct.showCalls(response.toString());
+                    break;
+                case RESPONSE_GET_CREDIT_OK :
+                    JSONObject params = response.getJSONObject("parameters");
+                    this.capabilities.wallet = params.getDouble("content");
+                    mainAct.statusMessage("phone credits updated");
+
+                    mainAct.setWallet(this.capabilities.wallet);
+
                     break;
 
                 default:
@@ -357,12 +351,12 @@ public class user {
             //i.printStackTrace();
 
         }
-/*
+
         Log.d(TAG, "Deserialized usersettings...");
         Log.d(TAG, "name: " + this.settings.name);
         Log.d(TAG, "code: " + this.settings.code);
         Log.d(TAG, "phone: " + this.settings.phone);
-*/
+
     }
 
     public void saveSettings(String name, String code, String phone) {
@@ -392,56 +386,7 @@ public class user {
     }
 
     ///////////////////  accounting /////////////////////
-    public void  updatePhoneLog () {
-        //Log.d(TAG,"update calls to ringer");
-        //get user settings
-        readSettings();
-        readLog();
-        //check length of code
-        if (settings.code.length() != 4) {
-            //show page 5 contains:
-            //on save.click :
-            //save user.settings to file
-            // register at ringer
-            mainAct.showSettings();
 
-        } else {
-            //Log.d(TAG,"login at Ringer code passed first inspection");
-            // encrypt settings
-            JSONObject payload = new JSONObject();
-            JSONArray JSONActions = new JSONArray();
-
-            try {
-                userAction[] actionsArray = this.userActions.toArray(new userAction[this.userActions.size()]);
-                for (int i=0 ; i< actionsArray.length; i+=1) {
-                    //Log.d(TAG, "logged array" + actionsArray[i].action + " " + actionsArray[i].number);
-                    JSONObject action = new JSONObject();
-                    action.put("loginDate",actionsArray[i].loginDate);
-                    action.put("action",actionsArray[i].action);
-                    action.put("number",actionsArray[i].number);
-                    action.put("startTimeHours", actionsArray[i].startTime.hours);
-                    action.put("startTimeMinutes",actionsArray[i].startTime.minutes);
-                    action.put("startTimeSeconds",actionsArray[i].startTime.seconds);
-
-                    action.put("endTimeHours",actionsArray[i].endTime.hours);
-                    action.put("endTimeMinutes",actionsArray[i].endTime.minutes);
-                    action.put("endTimeSeconds",actionsArray[i].endTime.seconds);
-                    JSONActions.put(action);
-                }
-
-
-                payload.put("action",ACTION_UPDATE_PHONELOG);
-                payload.put("code",this.settings.code);
-                payload.put("phone",this.settings.phone);
-                payload.put("phoneLog", JSONActions);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            String encryptedPayload = encrypt(payload.toString());
-            web.get(ringerServiceUrl, encryptedPayload);
-            // web.get will invoke handle webresponse inside the parent class;
-        }
-    }
 
     public void saveTransaction(double amount, String ccType,String ccNumber,String expirationMonth,
                                 String expirationYear,String securityCode,String nameOnCard){
@@ -458,7 +403,7 @@ public class user {
     public void updateWallet(){
         JSONObject payload = new JSONObject();
         try {
-            payload.put("action",ACTION_UPDATE_WALLET);
+            payload.put("action",ACTION_DO_PAYMENT);
             payload.put("code",this.settings.code);
             payload.put("phone",this.settings.phone);
             payload.put("amount",this.userTransaction.amount);
@@ -526,7 +471,7 @@ public class user {
         userActions.add(currentAction);
         saveLog();
         currentAction.action="none";
-        updatePhoneLog();
+
     }
 
     private timeStamp getTime() {
@@ -609,6 +554,25 @@ public class user {
         web.get(ringerServiceUrl, encryptedPayload);
 
     }
+
+    //////////////////// calls list ///////////////////////
+    public void getCredits() {
+        Log.d(TAG, "getCredits");
+        JSONObject payload = new JSONObject();
+        try {
+            payload.put("action",ACTION_GET_CREDIT);
+            payload.put("code",this.settings.code);
+            payload.put("phone",this.settings.phone);
+            payload.put("name",this.settings.name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String encryptedPayload = encrypt(payload.toString());
+        //doo http request call Ringerregistration?q=encryptedjson
+        //3.on response loginAtRinger
+        web.get(ringerServiceUrl, encryptedPayload);
+
+    }
     //////////////////// contacts /////////////////////////
     public String updateContacts() {
         Cursor mCursor;
@@ -647,6 +611,7 @@ public class user {
                 //Log.d(TAG,"iterate result");
                 String contact_id = mCursor.getString(mCursor.getColumnIndex(_ID));
                 contactName = mCursor.getString(mCursor.getColumnIndex(DISPLAY_NAME));
+                //Log.d(TAG,"contact " + contactName);
 
                 int hasPhoneNumber = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(HAS_PHONE_NUMBER)));
                 if (hasPhoneNumber > 0) {
@@ -655,6 +620,7 @@ public class user {
                     Cursor phoneCursor = phoneContacts.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[]{contact_id}, null);
                     while (phoneCursor.moveToNext()) {
                         contactPhone = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
+                        //Log.d(TAG, contactPhone);
                     }
                     phoneCursor.close();
 

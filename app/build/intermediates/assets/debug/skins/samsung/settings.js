@@ -42,9 +42,11 @@ function save_user (){
     
   };
   nameCheck();
-  phoneCheck();
+  user.phone = phoneCheck();
   pinCheck();
-  if ( (!nameError) && (!pinError) && (!phoneError)) EM_proxy('saveUser',user);
+  if ( (!nameError) && (!pinError) && (!phoneError)) {
+     EM_proxy('saveUser',user);
+  }
   else dialogOpen(inputErrorHelp);
 }
 
@@ -110,19 +112,27 @@ function phoneCheck () {
 	if (phone.charAt(0) =='+') {
 		if (!isNaN(phone)) {
 			phoneError=false;
-		    return;
+			phone = phone.replace('+','plusSign');
+		    return phone ;
 			
 		}
 	}
 	if ((phone.charAt(0) =='0')&&(phone.charAt(1) =='0')) {
 		if (!isNaN(phone)) {
 			phoneError=false;
-		    return;
+			while(phone.charAt(0) === '0') {
+			    phone = phone.substr(1);
+                //This will kill any 0's at the start of the string.
+
+			}
+            phone = 'plusSign' + phone;
+		    return phone;
 			
 		}
 	}
 	phoneError = true;
 	dialogOpen(phoneErrorHelp);
+	return '';
 }
 
 

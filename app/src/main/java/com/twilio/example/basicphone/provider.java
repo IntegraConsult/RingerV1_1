@@ -35,6 +35,14 @@ public class provider implements DeviceListener,
     // TODO: change this to point to the script on your public server
     private static final String AUTH_PHP_SCRIPT = "https://mymobilephone.herokuapp.com/token";
     //private static final String AUTH_PHP_SCRIPT = "http://api.ringer.unapps.net/twilio/token.php";
+    private static final int AUTHORIZATION_ERROR_CODE_JWT_TOKEN_EXPIRED = 31205;// acces token expired
+    private static final int AUTHORIZATION_ERROR_CODE_GENERIC = 31201;// generic authorization error
+    private static final int GENERIC_ERROR = 31000; // generic general error
+    // apparently error are thrown in the following order
+      // 05:35:09.836 error 31201
+      // 06:12:46.926 error 31205
+      // 06:13:09.711 error 31000
+
 
     public interface LoginListener
     {
@@ -367,7 +375,25 @@ public class provider implements DeviceListener,
 
     @Override  /* DeviceListener */
     public void onStopListening(Device inDevice, int inErrorCode, String inErrorMessage)
-    {
+    {   Log.d(TAG,"in Provider onStopListening Device, errorcode ="+ inErrorCode);
+
+        // get a new token
+        switch (inErrorCode) {
+            case AUTHORIZATION_ERROR_CODE_JWT_TOKEN_EXPIRED:
+            case AUTHORIZATION_ERROR_CODE_GENERIC:
+                Log.d(TAG,"caught authorization error and logging back in");
+                //String newToken = device.getCapabilityToken();
+                //device.updateCapabilityToken(newToken);
+                // lets try and login again
+                login("jenny",true,true);
+                break;
+            case GENERIC_ERROR:
+                Log.d(TAG,"generic error occurred, no clue what to do with it");
+                break;
+            default:
+                Log.d(TAG,"");
+                break;
+        }
         if (basicDeviceListener != null)
             basicDeviceListener.onDeviceStoppedListening(new Exception(inErrorMessage));
     }
