@@ -17,15 +17,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.InputType;
+
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -57,13 +55,7 @@ public class mainActivity extends Activity implements LoginListener,
     private ImageButton mainButton;
     private ToggleButton speakerButton;
     private ToggleButton muteButton;
-    //private RadioGroup inputSelect;
-    //private EditText outgoingTextBox;
-    //private EditText clientNameTextBox;
-    //private Button capabilitesButton;
-    //private CheckBox incomingCheckBox, outgoingCheckBox;
 
-    //// Ringer V1 imported suff ///////////////////////////////
     private EditText logTextBox;
     private AlertDialog incomingAlert;
 
@@ -71,7 +63,6 @@ public class mainActivity extends Activity implements LoginListener,
 
     private String skinUrl = "file:///android_asset/skins/samsung/index.html";
     private String settingsUrl = "file:///android_asset/skins/samsung/settings.html";
-    private String walletUrl = "file:///android_asset/skins/samsung/wallet.html";
     private TextView statusBar;
     private TextView userBar;
 
@@ -109,10 +100,11 @@ public class mainActivity extends Activity implements LoginListener,
         this.userBar.setText(message);
     }
 
+    /*
     public void showPage(int page) {
         mWebView.loadUrl("javascript: switch_to_page('" + page + "');");
     }
-
+*/
     public void showSettings() {
         mWebView.loadUrl(settingsUrl);
 
@@ -124,6 +116,7 @@ public class mainActivity extends Activity implements LoginListener,
     }
 
     public void showWallet() {
+        String walletUrl = "file:///android_asset/skins/samsung/wallet.html";
         mWebView.loadUrl(walletUrl);
     }
 
@@ -178,12 +171,7 @@ public class mainActivity extends Activity implements LoginListener,
 
         }
 
-        public boolean onConsoleMessage(ConsoleMessage cm) {
-            Log.d(TAG, cm.message() + " -- From line "
-                    + cm.lineNumber() + " of "
-                    + cm.sourceId());
-            return true;
-        }
+
     }
 
     // interprets an action sent from the webview
@@ -215,7 +203,8 @@ public class mainActivity extends Activity implements LoginListener,
                 String key = payload.getString("arguments");
                 //Log.d(TAG, "key " +  key);
                 mDevice.play(key);
-            } else if (action.equals("call")) {
+            }
+            else if (action.equals("call")) {
                 String number = payload.getString("arguments");
                 if (!number.equals("")) {
                     if (phoneUser.capabilities.phoneOutCapability.equals("yes")) {
@@ -230,7 +219,7 @@ public class mainActivity extends Activity implements LoginListener,
                         Log.d(TAG, "call " + number);
 
                         Map<String, String> params = new HashMap<String, String>();
-                        phoneUser.logCall(number);
+
                         // use the number = client + number ONLY for SMS!!!!
                         //number = "client:" + number;
                         params.put("To", number);
@@ -243,11 +232,13 @@ public class mainActivity extends Activity implements LoginListener,
 
                 }
 
-            } else if (action.equals("hangup")) {
+            }
+            else if (action.equals("hangup")) {
                 Log.d(TAG, "hangup ");
-                phoneUser.logHangup();
+
                 phone.disconnect();
-            } else if (action.equals("saveUser")) {
+            }
+            else if (action.equals("saveUser")) {
                 final JSONObject mUser;
                 mUser = payload.getJSONObject("arguments");
                 String name = mUser.getString("name");
@@ -262,7 +253,8 @@ public class mainActivity extends Activity implements LoginListener,
 
                 phoneUser.registerAtRinger();
 
-            } else if (action.equals("phoneVolume")) {
+            }
+            else if (action.equals("phoneVolume")) {
                 int volume = payload.getInt("arguments");
                 Log.d(TAG, "volume " + volume);
                 switch (volume) {
@@ -278,7 +270,8 @@ public class mainActivity extends Activity implements LoginListener,
                         phone.setSpeakerEnabled(true);
                         break;
                 }
-            } else if (action.equals("updateWallet")){
+            }
+            else if (action.equals("updateWallet")){
                 final JSONObject transaction;
                 transaction = payload.getJSONObject("arguments");
                 Double amount = transaction.getDouble("amount");
@@ -294,13 +287,16 @@ public class mainActivity extends Activity implements LoginListener,
 
                 phoneUser.updateWallet();
 
-            } else if (action.equals("getCalls")) {
+            }
+            else if (action.equals("getCalls")) {
                 phoneUser.getCalls ();
 
-            } else if (action.equals("getCredits")) {
+            }
+            else if (action.equals("getCredits")) {
                 phoneUser.getCredits ();
 
-            } else if (action.equals("gotoPaymentPage")){
+            }
+            else if (action.equals("gotoPaymentPage")){
                 Log.d(TAG,"gtoPaymentPage");
                 showWallet();
             }
@@ -368,24 +364,11 @@ public class mainActivity extends Activity implements LoginListener,
 
         mainButton = (ImageButton)findViewById(R.id.main_button);
         mainButton.setOnClickListener(this);
-        //logTextBox = (EditText)findViewById(R.id.log_text_box);
-        //outgoingTextBox = (EditText)findViewById(R.id.outgoing_client);
-        //clientNameTextBox = (EditText)findViewById(R.id.client_name);
-        //clientNameTextBox.setText(DEFAULT_CLIENT_NAME);
-        //capabilitesButton = (Button)findViewById(R.id.capabilites_button);
-        //capabilitesButton.setOnClickListener(this);
-        //outgoingCheckBox = (CheckBox)findViewById(R.id.outgoing);
-        //incomingCheckBox = (CheckBox)findViewById(R.id.incoming);
-        //inputSelect = (RadioGroup)findViewById(R.id.input_select);
-        //inputSelect.setOnCheckedChangeListener(this);
+
         phone = provider.getInstance(getApplicationContext());
         phone.setListeners(this, this, this);
         phone.setParent(mainActivity.this);
-        /*
-        phone.login(clientNameTextBox.getText().toString(), 
-        			outgoingCheckBox.isChecked(), 
-        			incomingCheckBox.isChecked());
-       */
+
 
         //auto login phone user intop Ringer
         // this login call causes the following state changes

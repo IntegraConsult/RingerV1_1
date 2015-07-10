@@ -13,6 +13,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -381,23 +383,53 @@ public class provider implements DeviceListener,
         switch (inErrorCode) {
             case AUTHORIZATION_ERROR_CODE_JWT_TOKEN_EXPIRED:
             case AUTHORIZATION_ERROR_CODE_GENERIC:
-                Log.d(TAG,"caught authorization error and logging back in");
-                //String newToken = device.getCapabilityToken();
-                //device.updateCapabilityToken(newToken);
-                // lets try and login again
-                login("jenny",true,true);
+                Log.d(TAG,"caught authorization error");
+                if (WIFIConnected()) {
+                    // lets try and login again to obtain a new  correct token
+                    if (!isCapabilityTokenValid())
+                        login(lastClientName, lastAllowOutgoing, lastAllowIncoming);
+                }
+                else {
+                    // throw the error
+                    Log.e(TAG,"no WIFI connection while trying to refresh token");
+                    if (basicDeviceListener != null)
+                        basicDeviceListener.onDeviceStoppedListening(new Exception(inErrorMessage));
+
+                }
+
                 break;
             case GENERIC_ERROR:
-                Log.d(TAG,"generic error occurred, no clue what to do with it");
+
+                // lets see if wifi is interrupted
+                if (!WIFIConnected()) {
+                   Log.d (TAG, "caught generic error while there was no WIFI, lets simply wait");
+                    if (!isCapabilityTokenValid())
+                        login(lastClientName, lastAllowOutgoing, lastAllowIncoming);
+                }
+                else {
+                    // no clue what has happened: throw an error
+                    Log.e (TAG, "Caught 3100 generic error while WIFI was on");
+                    if (basicDeviceListener != null)
+                        basicDeviceListener.onDeviceStoppedListening(new Exception(inErrorMessage));
+
+                }
+
+
                 break;
             default:
-                Log.d(TAG,"");
+                Log.d(TAG,"unknown error occured with code " + inErrorCode);
+                if (basicDeviceListener != null)
+                    basicDeviceListener.onDeviceStoppedListening(new Exception(inErrorMessage));
+
                 break;
         }
-        if (basicDeviceListener != null)
-            basicDeviceListener.onDeviceStoppedListening(new Exception(inErrorMessage));
     }
+    public boolean WIFIConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.mainAct.getSystemService(this.mainAct.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return wifi.isConnected();
 
+    }
     @Override  /* DeviceListener */
     public boolean receivePresenceEvents(Device inDevice)
     {

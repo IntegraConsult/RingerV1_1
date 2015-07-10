@@ -20,12 +20,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+
+
+/*
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
+*/
 
 class userSettings implements Serializable {
     String code = "";
@@ -52,20 +54,13 @@ class transaction {
     double amount = 0.0;
 
 }
-class userAction implements Serializable{
-    String action ="";
-    String number = "";
-    String loginDate = "";
-    timeStamp startTime;
-    timeStamp endTime;
-
-}
+/*
 class timeStamp implements Serializable {
     int hours = 0;
     int minutes = 0;
     int seconds = 0;
 }
-
+*/
 public class user {
     private Context mainContext;
     private mainActivity mainAct;
@@ -101,7 +96,7 @@ public class user {
 
     final static int ACTION_GET_CREDIT = 40;
     final static int RESPONSE_GET_CREDIT_OK = 41 ;
-    final static int RESPONSE_GET_CREDIT_ERROR = 42 ;
+    //final static int RESPONSE_GET_CREDIT_ERROR = 42 ;
 
 
 
@@ -109,8 +104,7 @@ public class user {
     final static int RESPONSE_GET_CALLS = 51;
 
 
-    List<userAction> userActions = new ArrayList<userAction>();
-    userAction currentAction = new userAction();
+
 
 
     public user(Context context, mainActivity act) {
@@ -154,9 +148,7 @@ public class user {
             switch (action) {
                 case RESPONSE_SET_CAPABILITIES:
                     //Log.d(TAG,"ACTION_SET_CAPABILITIES");
-                    // reset the phone log since its valuers hav just been tranferred succesfully to the server
-                    this.userActions.clear();
-                    this.saveLog();
+
 
                     // get the capabilities
                     JSONObject parameters = response.getJSONObject("parameters");
@@ -164,7 +156,7 @@ public class user {
                     this.capabilities.credit= parameters.getDouble("credit");
                     this.capabilities.day = parameters.getInt("day");
                     this.capabilities.year = parameters.getInt("year");
-                    this.currentAction.loginDate = parameters.getString("loginDate");
+
 
 
                     //Log.d(TAG,"credit =" + this.capabilities.credit);
@@ -351,12 +343,12 @@ public class user {
             //i.printStackTrace();
 
         }
-
+/*
         Log.d(TAG, "Deserialized usersettings...");
         Log.d(TAG, "name: " + this.settings.name);
         Log.d(TAG, "code: " + this.settings.code);
         Log.d(TAG, "phone: " + this.settings.phone);
-
+*/
     }
 
     public void saveSettings(String name, String code, String phone) {
@@ -423,57 +415,7 @@ public class user {
 
     }
 
-    public void logCall(String number){
-        Log.d(TAG, "Logging call to " + number);
-        logStartConnectionActivity(number);
-
-    }
-    public void logConnect(String number){
-        Log.d(TAG, "Logging attempto connect to " + number);
-
-    }
-    public void logDialing() {
-        Log.d(TAG, "Logging dialing state ");
-
-    }
-    public void logConnected(){
-        Log.d(TAG, "Logging connected state ");
-
-    }
-    public void logHangup(){
-        Log.d(TAG,"Logging hang up");
-        logEndConnectionActivity();
-    }
-    public void logDisconnect(){
-       Log.d(TAG, "Logging disconnect attempt");
-    }
-    public void logDisconnected(){
-        Log.d(TAG,"Logging disconnected state");
-    }
-    public void logStartConnectionActivity(String number) {
-
-        currentAction.action = "call";
-        currentAction.number = number;
-        currentAction.startTime = getTime();
-    }
-    public void logEndConnectionActivity() {
-        currentAction.endTime = getTime();
-        Log.d(TAG,"Add to actions log action:" + currentAction.action);
-        Log.d(TAG,"Add to actions log number:" + currentAction.number);
-        Log.d(TAG, "Add to actions log start:" + (60 * (60 * currentAction.startTime.hours)
-                + currentAction.startTime.minutes) +
-                currentAction.startTime.seconds);
-        Log.d(TAG,"Add to actions log end:" + (60*(60 * currentAction.endTime.hours)
-                +  currentAction.endTime.minutes) +
-                currentAction.endTime.seconds);
-
-
-        userActions.add(currentAction);
-        saveLog();
-        currentAction.action="none";
-
-    }
-
+    /*
     private timeStamp getTime() {
         timeStamp time = new timeStamp();
         Date date = new Date();   // given date
@@ -486,55 +428,7 @@ public class user {
         return time;
     }
 
-    public void readLog() {
-        List<userAction> actions = new ArrayList<userAction>();
-        try {
-            FileInputStream fileIn = this.mainContext.openFileInput("log.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            this.userActions = (List<userAction>)in.readObject();
-            in.close();
-            fileIn.close();
-        } catch (Exception i) {
-            Log.e(TAG, "IO error while reading actions log");
-            //i.printStackTrace();
-
-        }
-        // iterate over list to show content
-        for (userAction mAction: this.userActions) {
-            Log.d(TAG,"logged action:" + mAction.action);
-            Log.d(TAG,"logged number:" + mAction.number);
-            Log.d(TAG,"Logged start:" + (60*(60 * mAction.startTime.hours)
-                    +  mAction.startTime.minutes) +
-                    mAction.startTime.seconds);
-            Log.d(TAG,"logge end:" + (60*(60 * mAction.endTime.hours)
-                    +  mAction.endTime.minutes) +
-                    mAction.endTime.seconds);
-
-        }
-
-    }
-
-    public void saveLog (){
-        try {
-
-            FileOutputStream fos = this.mainContext.openFileOutput("log.ser", Context.MODE_PRIVATE);
-            ObjectOutputStream out = new ObjectOutputStream(fos);
-            out.writeObject(userActions);
-            out.close();
-            fos.close();
-
-        } catch (IOException ei) {
-            Log.e(TAG, "saveLog: java io error");
-            ei.printStackTrace();
-        } catch (Exception any) {
-            Log.e(TAG, "saveLog: weird write error");
-
-        }
-
-        // just to check if all is OK
-        readLog();
-
-    }
+*/
 
     //////////////////// calls list ///////////////////////
     public void getCalls() {
