@@ -20,14 +20,14 @@ import android.os.Handler;
 
 import android.util.Log;
 import android.view.View;
-import android.webkit.ConsoleMessage;
+//import android.webkit.ConsoleMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioGroup;
+
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -41,9 +41,8 @@ import org.json.JSONObject;
 public class mainActivity extends Activity implements LoginListener,
                                                             BasicConnectionListener,
                                                             BasicDeviceListener,
-                                                            View.OnClickListener,
-                                                          CompoundButton.OnCheckedChangeListener,
-                                                            RadioGroup.OnCheckedChangeListener
+                                                            View.OnClickListener
+
 {
 	private static final String DEFAULT_CLIENT_NAME = "jenny";
 	
@@ -53,8 +52,6 @@ public class mainActivity extends Activity implements LoginListener,
 
 
     private ImageButton mainButton;
-    private ToggleButton speakerButton;
-    private ToggleButton muteButton;
 
     private EditText logTextBox;
     private AlertDialog incomingAlert;
@@ -370,12 +367,12 @@ public class mainActivity extends Activity implements LoginListener,
         phone.setParent(mainActivity.this);
 
 
-        //auto login phone user intop Ringer
+        //auto login phone user into Ringer
         // this login call causes the following state changes
-        // settings file is read and phoneUser.settings are initialized during ringer login
-        // if login resuòlt is OK phoneUser.capabilities are set, based on the login response
-        // if capabilities havce changed (always the case in the firts login after creation)
-        // a login to the provider is done
+           // settings file is read and phoneUser.settings are initialized during ringer login
+           // if login result is OK phoneUser.capabilities are set, based on the login response
+           // if capabilities havce changed (always the case in the first login after creation)
+           // a login to the provider is executed and things take off....
         phoneUser.loginAtRinger();
     }
 
@@ -447,34 +444,8 @@ public class mainActivity extends Activity implements LoginListener,
                     phoneUser.capabilities.phoneInCapability.equals("yes"));
         }*/
     }
-    
-    @Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-	/*
-        if (group.getId() == R.id.input_select) {
-			if (checkedId == R.id.input_number) {
-				outgoingTextBox.setInputType(InputType.TYPE_CLASS_PHONE);
-				outgoingTextBox.setHint(R.string.outgoing_number);
-			} else {
-				outgoingTextBox.setInputType(InputType.TYPE_CLASS_TEXT);
-				outgoingTextBox.setHint(R.string.outgoing_client);
-			}
-			outgoingTextBox.setText("");
-		}
-	*/
-	}
 
-    @Override
-    public void onCheckedChanged(CompoundButton button, boolean isChecked)
-    {
 
-       if (button.getId() == R.id.speaker_toggle) {
-            phone.setSpeakerEnabled(isChecked);
-        } else if (button.getId() == R.id.mute_toggle){
-        	phone.setCallMuted(isChecked);
-        }
-
-    }
 
     private void addStatusMessage(final String message)
     {

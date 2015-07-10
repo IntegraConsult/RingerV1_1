@@ -19,10 +19,8 @@ public final class R {
     public static final class id {
         public static final int RelativeLayout1=0x7f060000;
         public static final int linearLayout=0x7f060001;
-        public static final int log_text_box=0x7f060007;
-        public static final int main_button=0x7f060006;
-        public static final int mute_toggle=0x7f060008;
-        public static final int speaker_toggle=0x7f060005;
+        public static final int log_text_box=0x7f060006;
+        public static final int main_button=0x7f060005;
         public static final int textView=0x7f060002;
         public static final int userText=0x7f060003;
         public static final int webView=0x7f060004;
