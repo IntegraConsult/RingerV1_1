@@ -51,6 +51,8 @@ public abstract class HttpHelper
 
         ThreadSafeClientConnManager connManager = new ThreadSafeClientConnManager(params, registry);
         httpClient = new DefaultHttpClient(connManager, params);
+
+        //change 3 and 4 also is a good thing
     }
 
     private static String stringFromInputStream(InputStream is) throws IOException
