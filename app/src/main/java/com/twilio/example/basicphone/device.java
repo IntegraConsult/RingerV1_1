@@ -87,6 +87,7 @@ public class device {
         Log.d(TAG,"stopRingRing");
         ringRing.stop();
         //some comments to test 5.7 branch
+        //and this is to see the upgrade to postgresql
     }
     /*
     mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
