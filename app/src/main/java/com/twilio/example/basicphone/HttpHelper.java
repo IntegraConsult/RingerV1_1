@@ -51,6 +51,7 @@ public abstract class HttpHelper
 
         ThreadSafeClientConnManager connManager = new ThreadSafeClientConnManager(params, registry);
         httpClient = new DefaultHttpClient(connManager, params);
+        //http helper comments also nice
     }
 
     private static String stringFromInputStream(InputStream is) throws IOException
