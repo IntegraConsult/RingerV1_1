@@ -86,6 +86,7 @@ public class device {
     public void stopRingRing() {
         Log.d(TAG,"stopRingRing");
         ringRing.stop();
+        //some comments to test 5.7 branch
     }
     /*
     mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
